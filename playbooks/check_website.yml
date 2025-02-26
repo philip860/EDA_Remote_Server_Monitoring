@@ -1,0 +1,19 @@
+---
+# check_website.yml
+
+- name: Check website status
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Check the status of the website
+      uri:
+        url: "https://automation.duncannetworks.com"  # Replace with your website URL
+        return_content: no
+        status_code: 200, 201, 202, 203, 204
+      register: website_status
+
+    - name: Trigger event with website status
+      ansible.builtin.event:
+        name: "website_status_check"
+        event:
+          status: "{{ website_status.status }}"

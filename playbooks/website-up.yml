@@ -1,0 +1,10 @@
+---
+# website_up.yml
+
+- name: Website is up
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Log website is up
+      ansible.builtin.debug:
+        msg: "The website is up and running."

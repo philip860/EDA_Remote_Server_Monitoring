@@ -1,0 +1,67 @@
+---
+# website_status_rulebook.yml
+
+- name: Check website status
+  hosts: localhost
+  collections:
+    - ansible.eda
+
+
+  sources:
+    - ansible.eda.url_check:
+        urls: 
+          #- https://automation.duncannetworks.com  # Replace with the URL to check
+          - https://10.0.0.111 #Added ip address, was having issues with resolving to automation.duncannetworks.com 
+        delay: 30  # Check every 5mins
+        headers:
+          User-Agent: "Mozilla/5.0"
+        verify_ssl: false
+    # - block:
+    #     - name: Check if URL is reachable
+    #       ansible.eda.url_check:
+    #         urls: 
+    #           - https://10.0.0.111
+    #         delay: 30
+    #         headers:
+    #           User-Agent: "Mozilla/5.0"
+    #         verify_ssl: false
+    #       register: url_check_result
+    #   rescue:
+    #     - name: Set default value when URL check fails
+    #       set_fact:
+    #         url_check_result: "No response"
+    #   always:
+    #     - name: Output URL check result
+    #       debug:
+    #         var: url_check_result
+
+
+
+  
+
+  rules:
+
+    #Used to debug EDA Console
+    # - name: "Print the event"
+    #   #condition: event.url_check.status_code == 000
+    #   action:
+    #     debug:
+    #       msg: "{{ url_check_result }}"
+
+    - name: Check if website is up
+      condition: event.url_check.status_code == 200
+      action:
+        run_job_template:
+          name: "Website Up Template"
+          id: 54  # Replace with the job template ID for website_up.yml
+          organization: Default
+
+    - name: Check if website is down
+      condition: event.url_check.status == 'down'
+      action:
+        run_job_template:
+          name: "Website Down Template"
+          id: 55  # Replace with the job template ID for website_down.yml
+          organization: Default
+
+

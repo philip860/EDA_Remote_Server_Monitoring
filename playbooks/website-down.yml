@@ -9,13 +9,12 @@
       ansible.builtin.debug:
         msg: "The website is down!"
       
-    - name: Send notification
-      community.general.mail:
-        host: "smtp.gmail.com"
-        port: 587
-        username: "{{ gmail_username_var }}"
-        password: "{{ gmail_password_var }}"
-        to: "philipduncan860@gmail.com"
-        subject: "Website Down Alert"
-        body: "The website is currently down. Please take immediate action."
-
+    # - name: Send notification
+    #   community.general.mail:
+    #     host: "smtp.gmail.com"
+    #     port: 587
+    #     username: "{{ gmail_username_var }}"
+    #     password: "{{ gmail_password_var }}"
+    #     to: "philipduncan860@gmail.com"
+    #     subject: "Website Down Alert"
+    #     body: "The website is currently down. Please take immediate action."

@@ -54,7 +54,7 @@
         run_job_template:
           name: "Website Up Template"
           id: 54  # Replace with the job template ID for website_up.yml
-          organization: Default
+          organization: AAP Migration Lab
 
     - name: Check if website is down
       condition: event.url_check.status == 'down'
@@ -62,6 +62,6 @@
         run_job_template:
           name: "Website Down Template"
           id: 55  # Replace with the job template ID for website_down.yml
-          organization: Default
+          organization: AAP Migration Lab
 
 
